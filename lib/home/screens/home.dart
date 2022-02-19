@@ -18,6 +18,10 @@ class Home extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              "assets/img/pexels-photo-220453.jpeg",
+              width: 70.0,
+            ),
             ElevatedButton(
               onPressed: () {},
               child: Text("New Game"),
@@ -26,7 +30,7 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text("LeaderBoard"),
+                child: Text("Leaderboard"),
               ),
             ),
             ElevatedButton(
