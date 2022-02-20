@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/newGame/screens/new_game_body.dart';
 import 'package:hang/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 class NewGame extends StatelessWidget {
   const NewGame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -23,12 +26,12 @@ class NewGame extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: MyTextWidget(
-                text: "2",
+                text: _currentWord!.toString(),
                 size: 30.0,
               )),
         ],
       ),
-      body: NewGameBody(),
+      body: const NewGameBody(),
     );
   }
 }
