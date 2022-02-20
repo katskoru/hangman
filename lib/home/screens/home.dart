@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hang/newGame/screens/new_game_screen.dart';
+import 'package:hang/widgets/text_widget.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,12 +10,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "HangMan Game",
-          style: TextStyle(fontFamily: "Marker", fontSize: 30.0),
-        ),
-      ),
+          centerTitle: true,
+          title: const MyTextWidget(
+            text: "HangMan",
+            size: 30.0,
+          )),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
