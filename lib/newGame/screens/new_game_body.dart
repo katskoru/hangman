@@ -18,6 +18,9 @@ class NewGameBody extends StatelessWidget {
         : Column(
             children: [
               Container(
+                child: Stack(
+                  children: [],
+                ),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 1 / 3,
                 color: Colors.green,
@@ -35,7 +38,7 @@ class NewGameBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               MyTextWidget(
-                                text: e,
+                                text: "",
                                 size: 20.0,
                               ),
                               Container(
