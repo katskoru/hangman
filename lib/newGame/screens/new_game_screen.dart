@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hang/newGame/screens/new_game_body.dart';
 import 'package:hang/widgets/text_widget.dart';
 
 class NewGame extends StatelessWidget {
@@ -27,6 +28,7 @@ class NewGame extends StatelessWidget {
               )),
         ],
       ),
+      body: NewGameBody(),
     );
   }
 }

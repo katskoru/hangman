@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/img/pexels-photo-220453.jpeg",
+              "assets/img/pexels-arindam-raha-2213575.jpg",
               width: 70.0,
             ),
             ElevatedButton(
