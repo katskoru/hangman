@@ -1,6 +1,16 @@
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 class NewGameProvider extends ChangeNotifier {
+  _init() {
+    _fetchData();
+  }
+
+  Future _fetchData() async {}
+
+  NewGameProvider() {
+    _init();
+  }
   final List _alphabet = [
     'A',
     'B',
