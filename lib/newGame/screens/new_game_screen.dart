@@ -5,6 +5,10 @@ class NewGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: () {}, icon: Icon(Icons.reply_outlined)),
+      ),
+    );
   }
 }

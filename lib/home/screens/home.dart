@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hang/newGame/screens/new_game_screen.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class Home extends StatelessWidget {
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "HangMan Game",
           style: TextStyle(fontFamily: "Marker", fontSize: 30.0),
         ),
@@ -23,19 +24,22 @@ class Home extends StatelessWidget {
               width: 70.0,
             ),
             ElevatedButton(
-              onPressed: () {},
-              child: Text("New Game"),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewGame()));
+              },
+              child: const Text("New Game"),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text("Leaderboard"),
+                child: const Text("Leaderboard"),
               ),
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text("Log Out"),
+              child: const Text("Log Out"),
               style: ElevatedButton.styleFrom(primary: Colors.red[900]),
             )
           ],
