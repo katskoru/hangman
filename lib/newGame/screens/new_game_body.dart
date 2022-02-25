@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -13,17 +14,26 @@ class NewGameBody extends StatelessWidget {
         Provider.of<NewGameProvider>(context).randomWords!.randomWords!;
     int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
     List _textList = listOfWords[_currentWord!].split('');
+    int _mistakes = Provider.of<NewGameProvider>(context).mistakes!;
     return listOfWords.first == ""
         ? const Center(child: CircularProgressIndicator())
         : Column(
             children: [
               Container(
+                color: Colors.grey[900],
                 child: Stack(
-                  children: [],
+                  children: [
+                    SvgPicture.asset("assets/svg/hangman.svg"),
+                    if (_mistakes > 0) SvgPicture.asset("assets/svg/head.svg"),
+                    if (_mistakes > 1) SvgPicture.asset("assets/svg/c.svg"),
+                    if (_mistakes > 2) SvgPicture.asset("assets/svg/lA.svg"),
+                    if (_mistakes > 3) SvgPicture.asset("assets/svg/lL.svg"),
+                    if (_mistakes > 4) SvgPicture.asset("assets/svg/rA.svg"),
+                    if (_mistakes > 5) SvgPicture.asset("assets/svg/rL.svg"),
+                  ],
                 ),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 1 / 3,
-                color: Colors.green,
               ),
               Container(
                 width: double.infinity,
@@ -65,7 +75,18 @@ class NewGameBody extends StatelessWidget {
                                 size: 30.0,
                               ),
                               onPressed: () {
-                                print(e);
+                                Provider.of<NewGameProvider>(context,
+                                        listen: false)
+                                    .mistakes = Provider.of<NewGameProvider>(
+                                            context,
+                                            listen: false)
+                                        .mistakes! +
+                                    1;
+                                if (_mistakes > 5) {
+                                  Provider.of<NewGameProvider>(context,
+                                          listen: false)
+                                      .mistakes = 0;
+                                }
                               },
                             ),
                           ))

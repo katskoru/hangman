@@ -9,10 +9,19 @@ class NewGameProvider extends ChangeNotifier {
   int? get currentWord => _currentWord;
   set currentWord(int? newIndex) {
     _currentWord = newIndex;
+    notifyListeners();
   }
 
+  set mistakes(int? newMistake) {
+    _mistakes = newMistake;
+    notifyListeners();
+  }
+
+  int? _mistakes;
+  int? get mistakes => _mistakes;
   _init() {
     _randomWords = RandomWords(randomWords: [""]);
+    _mistakes = 0;
     _currentWord = 0;
     _fetchData();
   }
