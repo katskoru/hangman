@@ -13,7 +13,7 @@ class NewGameBody extends StatelessWidget {
     List listOfWords =
         Provider.of<NewGameProvider>(context).randomWords!.randomWords!;
     int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
-    List<String> _textList = listOfWords[_currentWord!].toLowerCase().split('');
+    List _textList = listOfWords[_currentWord!].toLowerCase().split('');
     int _mistakes = Provider.of<NewGameProvider>(context).mistakes!;
     return listOfWords.first == ""
         ? const Center(child: CircularProgressIndicator())
@@ -77,18 +77,10 @@ class NewGameBody extends StatelessWidget {
                                 size: 30.0,
                               ),
                               onPressed: () {
-                                Provider.of<NewGameProvider>(context,
-                                        listen: false)
-                                    .mistakes = Provider.of<NewGameProvider>(
-                                            context,
-                                            listen: false)
-                                        .mistakes! +
-                                    1;
-                                if (_mistakes > 5) {
-                                  Provider.of<NewGameProvider>(context,
-                                          listen: false)
-                                      .mistakes = 0;
-                                }
+                                _checkButton(
+                                    context: context,
+                                    letter: e.toLowerCase(),
+                                    textList: _textList);
                               },
                             ),
                           ))
@@ -99,11 +91,17 @@ class NewGameBody extends StatelessWidget {
           );
   }
 
-  _checkButton({String? letter, List<String>? textList}) {
+  _checkButton({String? letter, List? textList, context}) {
     if (textList!.contains(letter)) {
       print("hurra");
     } else {
-      print("niee");
+      Provider.of<NewGameProvider>(context, listen: false).mistakes =
+          Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
+      // if (_mistakes > 5) {
+      //   Provider.of<NewGameProvider>(context,
+      //           listen: false)
+      //       .mistakes = 0;
+      // };
     }
   }
 }
