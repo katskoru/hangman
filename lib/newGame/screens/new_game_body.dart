@@ -13,12 +13,14 @@ class NewGameBody extends StatelessWidget {
     List listOfWords =
         Provider.of<NewGameProvider>(context).randomWords!.randomWords!;
     int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
-    List _textList = listOfWords[_currentWord!].split('');
+    List<String> _textList = listOfWords[_currentWord!].toLowerCase().split('');
     int _mistakes = Provider.of<NewGameProvider>(context).mistakes!;
     return listOfWords.first == ""
         ? const Center(child: CircularProgressIndicator())
         : Column(
             children: [
+              Text(
+                  Provider.of<NewGameProvider>(context).passedWords.toString()),
               Container(
                 color: Colors.grey[900],
                 child: Stack(
@@ -95,5 +97,13 @@ class NewGameBody extends StatelessWidget {
               )),
             ],
           );
+  }
+
+  _checkButton({String? letter, List<String>? textList}) {
+    if (textList!.contains(letter)) {
+      print("hurra");
+    } else {
+      print("niee");
+    }
   }
 }

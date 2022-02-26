@@ -7,6 +7,7 @@ class NewGameProvider extends ChangeNotifier {
   RandomWords? get randomWords => _randomWords;
   int? _currentWord;
   int? get currentWord => _currentWord;
+
   set currentWord(int? newIndex) {
     _currentWord = newIndex;
     notifyListeners();
@@ -17,11 +18,20 @@ class NewGameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<String>? _passedWords;
+  List<String>? get passedWords => _passedWords;
+
+  set passedWords(List<String>? newList) {
+    _passedWords = newList;
+    notifyListeners();
+  }
+
   int? _mistakes;
   int? get mistakes => _mistakes;
   _init() {
     _randomWords = RandomWords(randomWords: [""]);
     _mistakes = 0;
+    _passedWords = [];
     _currentWord = 0;
     _fetchData();
   }
