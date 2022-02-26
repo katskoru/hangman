@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/newGame/screens/new_game_screen.dart';
 import 'package:hang/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,6 +27,7 @@ class Home extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                Provider.of<NewGameProvider>(context, listen: false).init();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => NewGame()));
               },

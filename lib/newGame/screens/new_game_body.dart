@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class NewGameBody extends StatelessWidget {
   const NewGameBody({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class NewGameBody extends StatelessWidget {
     int _mistakes = Provider.of<NewGameProvider>(context).mistakes!;
     List _passedWords = Provider.of<NewGameProvider>(context).passedWords!;
 
-    return listOfWords.first == ""
+    return Provider.of<NewGameProvider>(context).loading!
         ? const Center(child: CircularProgressIndicator())
         : Column(
             children: [
@@ -51,7 +52,9 @@ class NewGameBody extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               MyTextWidget(
-                                text: "",
+                                text: _passedWords.contains(e.toLowerCase())
+                                    ? e
+                                    : "",
                                 size: 20.0,
                               ),
                               Container(
@@ -99,15 +102,32 @@ class NewGameBody extends StatelessWidget {
     if (textList!.contains(letter)) {
       Provider.of<NewGameProvider>(context, listen: false)
           .addPassedLetter(letter!);
-      print("hurra");
+
+// is next level check
+
     } else {
       Provider.of<NewGameProvider>(context, listen: false).mistakes =
           Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
-      // if (_mistakes > 5) {
-      //   Provider.of<NewGameProvider>(context,
-      //           listen: false)
-      //       .mistakes = 0;
-      // };
+      if (Provider.of<NewGameProvider>(context, listen: false).mistakes! >= 6) {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.ERROR,
+          borderSide: BorderSide(color: Colors.red, width: 2),
+          buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+          headerAnimationLoop: true,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'GAME OVER',
+          dismissOnBackKeyPress: false,
+          desc: 'Do you want play again?',
+          btnCancelOnPress: () {
+            Navigator.pop(context);
+          },
+          btnOkOnPress: () {
+            Provider.of<NewGameProvider>(context, listen: false).loading = true;
+            Provider.of<NewGameProvider>(context, listen: false).init();
+          },
+        )..show();
+      }
     }
   }
 }

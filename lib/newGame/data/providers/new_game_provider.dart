@@ -30,14 +30,32 @@ class NewGameProvider extends ChangeNotifier {
   //   _passedWords = newList;
   //   notifyListeners();
   // }
-
+  bool? _loading;
   int? _mistakes;
   int? get mistakes => _mistakes;
-  _init() {
+  bool? get loading => _loading;
+
+  set loading(bool? newLoad) {
+    _loading = newLoad;
+    notifyListeners();
+  }
+
+  bool? _moveToNextLevel;
+
+  bool? get moveToNextLevel => _moveToNextLevel;
+
+  set moveToNextLevel(bool? newLevel) {
+    _moveToNextLevel = newLevel;
+    notifyListeners();
+  }
+
+  init() {
     _randomWords = RandomWords(randomWords: [""]);
     _mistakes = 0;
     _passedWords = [];
     _currentWord = 0;
+    _loading = true;
+    _moveToNextLevel = false;
     _fetchData();
   }
 
@@ -46,6 +64,7 @@ class NewGameProvider extends ChangeNotifier {
       http.Response response = await http.get(
           Uri.parse("https://random-word-api.herokuapp.com/word?number=10"));
       _randomWords = RandomWords.fromJson(response.body);
+      _loading = false;
       notifyListeners();
     } catch (error) {
       print(error);
@@ -53,7 +72,7 @@ class NewGameProvider extends ChangeNotifier {
   }
 
   NewGameProvider() {
-    _init();
+    // _init();
   }
   final List _alphabet = [
     'A',
