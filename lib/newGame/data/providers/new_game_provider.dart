@@ -20,6 +20,10 @@ class NewGameProvider extends ChangeNotifier {
 
   List<String>? _passedWords;
   List<String>? get passedWords => _passedWords;
+  set passedWords(List<String>? newList) {
+    _passedWords = newList;
+    notifyListeners();
+  }
 
   addPassedLetter(String letter) {
     _passedWords!.add(letter);

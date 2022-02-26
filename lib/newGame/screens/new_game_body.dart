@@ -22,7 +22,6 @@ class NewGameBody extends StatelessWidget {
         ? const Center(child: CircularProgressIndicator())
         : Column(
             children: [
-              Text(_passedWords.toString()),
               Container(
                 color: Colors.grey[900],
                 child: Stack(
@@ -54,7 +53,7 @@ class NewGameBody extends StatelessWidget {
                               MyTextWidget(
                                 text: _passedWords.contains(e.toLowerCase())
                                     ? e
-                                    : "",
+                                    : "#$e",
                                 size: 20.0,
                               ),
                               Container(
@@ -103,8 +102,63 @@ class NewGameBody extends StatelessWidget {
       Provider.of<NewGameProvider>(context, listen: false)
           .addPassedLetter(letter!);
 
-// is next level check
+////////////////// is next level check
 
+      bool _myLocalBool = false;
+      List<bool> _wordCheck = [];
+
+      textList.forEach((element) {
+        if (Provider.of<NewGameProvider>(context, listen: false)
+            .passedWords!
+            .contains(element)) {
+          _wordCheck.add(true);
+        } else {
+          _wordCheck.add(false);
+        }
+      });
+
+      if (_wordCheck.contains(false)) {
+        _myLocalBool = false;
+      } else {
+        _myLocalBool = true;
+      }
+      if (Provider.of<NewGameProvider>(context, listen: false).currentWord! <
+          Provider.of<NewGameProvider>(context, listen: false)
+                  .randomWords!
+                  .randomWords!
+                  .length -
+              1) {
+        if (_myLocalBool) {
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.SUCCES,
+            borderSide: BorderSide(color: Colors.green, width: 2),
+            buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+            headerAnimationLoop: true,
+            animType: AnimType.BOTTOMSLIDE,
+            title: 'Congratulations',
+            dismissOnBackKeyPress: false,
+            desc: 'Move to next word',
+            btnCancelOnPress: () {
+              Provider.of<NewGameProvider>(context, listen: false).loading =
+                  true;
+              Provider.of<NewGameProvider>(context, listen: false).init();
+            },
+            btnOkOnPress: () {
+              Provider.of<NewGameProvider>(context, listen: false).currentWord =
+                  Provider.of<NewGameProvider>(context, listen: false)
+                          .currentWord! +
+                      1;
+              Provider.of<NewGameProvider>(context, listen: false).passedWords =
+                  [];
+            },
+          ).show();
+        }
+      } else {
+        // show end game dialog -> close i start again (new game plus)
+      }
+
+      ////////////////
     } else {
       Provider.of<NewGameProvider>(context, listen: false).mistakes =
           Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
@@ -118,6 +172,7 @@ class NewGameBody extends StatelessWidget {
           animType: AnimType.BOTTOMSLIDE,
           title: 'GAME OVER',
           dismissOnBackKeyPress: false,
+          btnCancelText: "Restart",
           desc: 'Do you want play again?',
           btnCancelOnPress: () {
             Navigator.pop(context);
@@ -126,7 +181,7 @@ class NewGameBody extends StatelessWidget {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
           },
-        )..show();
+        ).show();
       }
     }
   }
