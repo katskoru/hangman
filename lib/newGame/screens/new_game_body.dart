@@ -152,7 +152,7 @@ class NewGameBody extends StatelessWidget {
             },
           ).show();
         }
-      } else {
+      } else if (_myLocalBool == true) {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.SUCCES,
@@ -162,7 +162,7 @@ class NewGameBody extends StatelessWidget {
           animType: AnimType.BOTTOMSLIDE,
           title: 'Congratulations - you win!',
           dismissOnBackKeyPress: false,
-          desc: 'What you want to do?',
+          desc: 'What do you want to do?',
           btnCancelText: "Close",
           btnOkText: "Start again",
           btnCancelOnPress: () {
