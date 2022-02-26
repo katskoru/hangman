@@ -140,9 +140,7 @@ class NewGameBody extends StatelessWidget {
             dismissOnBackKeyPress: false,
             desc: 'Move to next word',
             btnCancelOnPress: () {
-              Provider.of<NewGameProvider>(context, listen: false).loading =
-                  true;
-              Provider.of<NewGameProvider>(context, listen: false).init();
+              Navigator.pop(context);
             },
             btnOkOnPress: () {
               Provider.of<NewGameProvider>(context, listen: false).currentWord =
@@ -155,6 +153,26 @@ class NewGameBody extends StatelessWidget {
           ).show();
         }
       } else {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.SUCCES,
+          borderSide: BorderSide(color: Colors.green, width: 2),
+          buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+          headerAnimationLoop: true,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'Congratulations - you win!',
+          dismissOnBackKeyPress: false,
+          desc: 'What you want to do?',
+          btnCancelText: "Close",
+          btnOkText: "Start again",
+          btnCancelOnPress: () {
+            Navigator.pop(context);
+          },
+          btnOkOnPress: () {
+            Provider.of<NewGameProvider>(context, listen: false).loading = true;
+            Provider.of<NewGameProvider>(context, listen: false).init();
+          },
+        ).show();
         // show end game dialog -> close i start again (new game plus)
       }
 
