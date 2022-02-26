@@ -15,12 +15,13 @@ class NewGameBody extends StatelessWidget {
     int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
     List _textList = listOfWords[_currentWord!].toLowerCase().split('');
     int _mistakes = Provider.of<NewGameProvider>(context).mistakes!;
+    List _passedWords = Provider.of<NewGameProvider>(context).passedWords!;
+
     return listOfWords.first == ""
         ? const Center(child: CircularProgressIndicator())
         : Column(
             children: [
-              Text(
-                  Provider.of<NewGameProvider>(context).passedWords.toString()),
+              Text(_passedWords.toString()),
               Container(
                 color: Colors.grey[900],
                 child: Stack(
@@ -72,16 +73,19 @@ class NewGameBody extends StatelessWidget {
                       .map((e) => Container(
                             width: 60.0,
                             child: ElevatedButton(
+                              // step 1
                               child: MyTextWidget(
                                 text: e,
                                 size: 30.0,
                               ),
-                              onPressed: () {
-                                _checkButton(
-                                    context: context,
-                                    letter: e.toLowerCase(),
-                                    textList: _textList);
-                              },
+                              onPressed: _passedWords.contains(e.toLowerCase())
+                                  ? null
+                                  : () {
+                                      _checkButton(
+                                          context: context,
+                                          letter: e.toLowerCase(),
+                                          textList: _textList);
+                                    },
                             ),
                           ))
                       .toList(),
@@ -93,6 +97,8 @@ class NewGameBody extends StatelessWidget {
 
   _checkButton({String? letter, List? textList, context}) {
     if (textList!.contains(letter)) {
+      Provider.of<NewGameProvider>(context, listen: false)
+          .addPassedLetter(letter!);
       print("hurra");
     } else {
       Provider.of<NewGameProvider>(context, listen: false).mistakes =
