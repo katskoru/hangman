@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
+import 'package:hang/newGame/data/providers/timer_provider.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -132,8 +133,8 @@ class NewGameBody extends StatelessWidget {
           AwesomeDialog(
             context: context,
             dialogType: DialogType.SUCCES,
-            borderSide: BorderSide(color: Colors.green, width: 2),
-            buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+            borderSide: const BorderSide(color: Colors.green, width: 2),
+            buttonsBorderRadius: const BorderRadius.all(Radius.circular(2)),
             headerAnimationLoop: true,
             animType: AnimType.BOTTOMSLIDE,
             title: 'Congratulations',
@@ -141,6 +142,9 @@ class NewGameBody extends StatelessWidget {
             desc: 'Move to next word',
             btnCancelOnPress: () {
               Navigator.pop(context);
+              Provider.of<TimerProvider>(context, listen: false)
+                  .timer!
+                  .cancel();
             },
             btnOkOnPress: () {
               Provider.of<NewGameProvider>(context, listen: false).currentWord =
@@ -149,6 +153,9 @@ class NewGameBody extends StatelessWidget {
                       1;
               Provider.of<NewGameProvider>(context, listen: false).passedWords =
                   [];
+              Provider.of<TimerProvider>(context, listen: false)
+                  .timer!
+                  .cancel();
             },
           ).show();
         }
@@ -156,8 +163,8 @@ class NewGameBody extends StatelessWidget {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.SUCCES,
-          borderSide: BorderSide(color: Colors.green, width: 2),
-          buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+          borderSide: const BorderSide(color: Colors.green, width: 2),
+          buttonsBorderRadius: const BorderRadius.all(Radius.circular(2)),
           headerAnimationLoop: true,
           animType: AnimType.BOTTOMSLIDE,
           title: 'Congratulations - you win!',
@@ -167,10 +174,12 @@ class NewGameBody extends StatelessWidget {
           btnOkText: "Start again",
           btnCancelOnPress: () {
             Navigator.pop(context);
+            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
+            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
         ).show();
         // show end game dialog -> close i start again (new game plus)
@@ -184,8 +193,8 @@ class NewGameBody extends StatelessWidget {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
-          borderSide: BorderSide(color: Colors.red, width: 2),
-          buttonsBorderRadius: BorderRadius.all(Radius.circular(2)),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+          buttonsBorderRadius: const BorderRadius.all(Radius.circular(2)),
           headerAnimationLoop: true,
           animType: AnimType.BOTTOMSLIDE,
           title: 'GAME OVER',
@@ -194,10 +203,12 @@ class NewGameBody extends StatelessWidget {
           desc: 'Do you want play again?',
           btnCancelOnPress: () {
             Navigator.pop(context);
+            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
+            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
         ).show();
       }
