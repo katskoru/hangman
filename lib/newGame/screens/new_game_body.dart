@@ -142,9 +142,9 @@ class NewGameBody extends StatelessWidget {
             desc: 'Move to next word',
             btnCancelOnPress: () {
               Navigator.pop(context);
-              Provider.of<TimerProvider>(context, listen: false)
-                  .timer!
-                  .cancel();
+              // Provider.of<TimerProvider>(context, listen: false)
+              //     .timer!
+              //     .cancel();
             },
             btnOkOnPress: () {
               Provider.of<NewGameProvider>(context, listen: false).currentWord =
@@ -153,9 +153,9 @@ class NewGameBody extends StatelessWidget {
                       1;
               Provider.of<NewGameProvider>(context, listen: false).passedWords =
                   [];
-              Provider.of<TimerProvider>(context, listen: false)
-                  .timer!
-                  .cancel();
+              // Provider.of<TimerProvider>(context, listen: false)
+              //     .timer!
+              //     .cancel();
             },
           ).show();
         }
@@ -174,12 +174,12 @@ class NewGameBody extends StatelessWidget {
           btnOkText: "Start again",
           btnCancelOnPress: () {
             Navigator.pop(context);
-            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
+            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
-            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
+            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
         ).show();
         // show end game dialog -> close i start again (new game plus)
@@ -203,12 +203,12 @@ class NewGameBody extends StatelessWidget {
           desc: 'Do you want play again?',
           btnCancelOnPress: () {
             Navigator.pop(context);
-            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
+            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
-            Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
+            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
         ).show();
       }

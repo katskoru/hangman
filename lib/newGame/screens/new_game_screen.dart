@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/newGame/data/providers/timer_provider.dart';
@@ -13,16 +15,20 @@ class NewGame extends StatefulWidget {
 }
 
 class _NewGameState extends State<NewGame> {
+  Timer? _timer;
   @override
   void initState() {
     // Provider.of<TimerProvider>(context).init();
-    context.read<TimerProvider>().init();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      context.read<TimerProvider>().time = timer.tick;
+    });
     super.initState();
+  }
 
-    @override
-    void dispose() {
-      super.dispose();
-    }
+  @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
   }
 
   @override
@@ -39,8 +45,7 @@ class _NewGameState extends State<NewGame> {
         centerTitle: true,
         title: MyTextWidget(
           size: 30.0,
-          text:
-              Provider.of<TimerProvider>(context).timer!.tick.toString() + "s",
+          text: Provider.of<TimerProvider>(context).time.toString() + " s",
         ),
         actions: [
           Padding(
