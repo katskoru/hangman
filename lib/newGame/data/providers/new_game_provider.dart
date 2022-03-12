@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:hang/newGame/data/models/random_words.dart';
 import 'package:http/http.dart' as http;
@@ -107,4 +109,33 @@ class NewGameProvider extends ChangeNotifier {
     'Z'
   ];
   List get alphabet => _alphabet;
+
+  int _time = 0;
+  int get time => _time;
+
+  set time(int newTime) {
+    _time = newTime;
+    notifyListeners();
+  }
+
+  Timer? _timer;
+
+  Timer? get timer => _timer;
+  set timer(Timer? newTimer) {
+    _timer = newTimer;
+    notifyListeners();
+  }
+
+  startTimer() {
+    time = 0;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _time = timer.tick;
+      notifyListeners();
+    });
+  }
+
+  endTimer() {
+    timer!.cancel();
+    timer = null;
+  }
 }
