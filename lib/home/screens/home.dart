@@ -27,7 +27,14 @@ class Home extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                if (Provider.of<NewGameProvider>(context, listen: false)
+                        .timer !=
+                    null) {
+                  Provider.of<NewGameProvider>(context, listen: false)
+                      .endTimer();
+                }
                 Provider.of<NewGameProvider>(context, listen: false).init();
+
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => NewGame()));
               },

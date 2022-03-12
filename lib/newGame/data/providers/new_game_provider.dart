@@ -73,9 +73,7 @@ class NewGameProvider extends ChangeNotifier {
       _loading = false;
       startTimer();
       notifyListeners();
-    } catch (error) {
-      print(error);
-    }
+    } catch (error) {}
   }
 
   NewGameProvider() {

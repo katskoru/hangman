@@ -7,25 +7,8 @@ import 'package:hang/newGame/screens/new_game_body.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
-class NewGame extends StatefulWidget {
+class NewGame extends StatelessWidget {
   const NewGame({Key? key}) : super(key: key);
-
-  @override
-  State<NewGame> createState() => _NewGameState();
-}
-
-class _NewGameState extends State<NewGame> {
-  Timer? _timer;
-  @override
-  void initState() {
-    // Provider.of<TimerProvider>(context).init();
-  }
-
-  @override
-  void dispose() {
-    _timer!.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +17,19 @@ class _NewGameState extends State<NewGame> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              if (Provider.of<NewGameProvider>(context, listen: false).timer !=
-                  null) {
-                Provider.of<NewGameProvider>(context, listen: false).endTimer();
-                Navigator.pop(context);
-              }
-            },
+            onPressed:
+                Provider.of<NewGameProvider>(context, listen: true).timer ==
+                        null
+                    ? null
+                    : () {
+                        if (Provider.of<NewGameProvider>(context, listen: false)
+                                .timer !=
+                            null) {
+                          Provider.of<NewGameProvider>(context, listen: false)
+                              .endTimer();
+                          Navigator.pop(context);
+                        }
+                      },
             icon: const Icon(Icons.reply_outlined)),
         centerTitle: true,
         title: MyTextWidget(
