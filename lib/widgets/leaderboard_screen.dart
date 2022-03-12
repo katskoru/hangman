@@ -25,6 +25,7 @@ class LeaderboardScreen extends StatelessWidget {
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("leaderboard")
+                      .orderBy("score", descending: true)
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
