@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
-import 'package:hang/newGame/data/providers/timer_provider.dart';
+
 import 'package:hang/newGame/screens/new_game_body.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -19,10 +19,6 @@ class _NewGameState extends State<NewGame> {
   @override
   void initState() {
     // Provider.of<TimerProvider>(context).init();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      context.read<TimerProvider>().time = timer.tick;
-    });
-    super.initState();
   }
 
   @override
@@ -39,13 +35,17 @@ class _NewGameState extends State<NewGame> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              if (Provider.of<NewGameProvider>(context, listen: false).timer !=
+                  null) {
+                Provider.of<NewGameProvider>(context, listen: false).endTimer();
+                Navigator.pop(context);
+              }
             },
             icon: const Icon(Icons.reply_outlined)),
         centerTitle: true,
         title: MyTextWidget(
           size: 30.0,
-          text: Provider.of<TimerProvider>(context).time.toString() + " s",
+          text: Provider.of<NewGameProvider>(context).time.toString() + " s",
         ),
         actions: [
           Padding(

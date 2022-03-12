@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
-import 'package:hang/newGame/data/providers/timer_provider.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';

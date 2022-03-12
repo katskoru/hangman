@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hang/newGame/data/providers/timer_provider.dart';
+
 import 'package:provider/provider.dart';
 import 'home/screens/home.dart';
 import 'newGame/data/providers/new_game_provider.dart';
@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => NewGameProvider()),
-        ChangeNotifierProvider(create: (context) => TimerProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
