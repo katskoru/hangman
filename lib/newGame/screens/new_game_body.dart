@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
@@ -6,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class NewGameBody extends StatelessWidget {
-  const NewGameBody({Key? key}) : super(key: key);
+  NewGameBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -142,9 +143,6 @@ class NewGameBody extends StatelessWidget {
             desc: 'Move to next word',
             btnCancelOnPress: () {
               Navigator.pop(context);
-              // Provider.of<TimerProvider>(context, listen: false)
-              //     .timer!
-              //     .cancel();
             },
             btnOkOnPress: () {
               Provider.of<NewGameProvider>(context, listen: false).currentWord =
@@ -203,12 +201,10 @@ class NewGameBody extends StatelessWidget {
           desc: 'Do you want play again?',
           btnCancelOnPress: () {
             Navigator.pop(context);
-            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
-            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
         ).show();
       }

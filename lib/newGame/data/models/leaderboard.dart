@@ -1,3 +1,8 @@
+import 'package:provider/provider.dart';
+
+import '../providers/new_game_provider.dart';
+import 'package:hang/newGame/screens/new_game_body.dart';
+
 class Leaderboard {
   Leaderboard({required this.login, required this.score, required this.time});
 

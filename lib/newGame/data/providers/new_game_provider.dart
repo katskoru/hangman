@@ -32,10 +32,6 @@ class NewGameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // set passedWords(List<String>? newList) {
-  //   _passedWords = newList;
-  //   notifyListeners();
-  // }
   bool? _loading;
   int? _mistakes;
   int? get mistakes => _mistakes;
