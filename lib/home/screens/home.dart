@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hang/newGame/data/models/leaderboard.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/newGame/screens/new_game_screen.dart';
+import 'package:hang/widgets/leaderboard_screen.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +32,6 @@ class Home extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Provider.of<NewGameProvider>(context, listen: false).init();
-
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const NewGame()));
               },
@@ -39,7 +40,12 @@ class Home extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LeaderboardScreen()));
+                },
                 child: const Text("Leaderboard"),
               ),
             ),
