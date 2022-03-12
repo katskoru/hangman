@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "97012210257",
+    "project_id": "hangman-ac0c8",
+    "storage_bucket": "hangman-ac0c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97012210257:android:5bf1678880fbc617613670",
+        "android_client_info": {
+          "package_name": "space.skorupa.hang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97012210257-tlkd5qngl63q8hmsrr5bq3v3afh6aigs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSlGHW3_S2jAYSETENAN2dastDkSZRTSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97012210257-tlkd5qngl63q8hmsrr5bq3v3afh6aigs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

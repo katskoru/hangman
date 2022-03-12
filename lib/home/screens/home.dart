@@ -4,6 +4,8 @@ import 'package:hang/newGame/screens/new_game_screen.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../newGame/data/providers/auth_state_hang.dart';
+
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -42,7 +44,9 @@ class Home extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<AuthState>(context, listen: false).signOut();
+              },
               child: const Text("Log Out"),
               style: ElevatedButton.styleFrom(primary: Colors.red[900]),
             )

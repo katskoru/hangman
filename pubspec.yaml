@@ -38,6 +38,10 @@ dependencies:
   http: ^0.13.4
   flutter_svg: ^1.0.3
   awesome_dialog: ^2.1.2
+  firebase_auth: ^3.3.9
+  cloud_firestore: ^3.1.10
+  firebase_core: ^1.13.1
+  
 
 dev_dependencies:
   flutter_test:
