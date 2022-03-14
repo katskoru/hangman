@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hang/newGame/data/models/leaderboard.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/newGame/screens/new_game_screen.dart';
-import 'package:hang/widgets/leaderboard_screen.dart';
+import 'package:hang/newGame/screens/leaderboard_screen.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -14,28 +14,33 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.grey[850],
       appBar: AppBar(
           centerTitle: true,
           title: const MyTextWidget(
-            text: "HangMan",
+            text: "Hangman",
             size: 30.0,
           )),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/img/pexels-arindam-raha-2213575.jpg",
-              width: 70.0,
+            Container(
+              height: 200,
+              child: Image.asset(
+                "assets/img/pexels-neosiam-625219.jpg",
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<NewGameProvider>(context, listen: false).init();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const NewGame()));
-              },
-              child: const Text("New Game"),
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: ElevatedButton(
+                onPressed: () {
+                  Provider.of<NewGameProvider>(context, listen: false).init();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const NewGame()));
+                },
+                child: const Text("New Game"),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),

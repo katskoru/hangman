@@ -20,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[850],
       appBar: AppBar(),
       body: Form(
         key: _formKey,
@@ -29,11 +30,15 @@ class _SignUpPageState extends State<SignUpPage> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                const FlutterLogo(size: 100.0),
+                const FlutterLogo(
+                  size: 100.0,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: "Email"),
+                    decoration: const InputDecoration(
+                        labelText: "Email",
+                        labelStyle: TextStyle(color: Colors.white)),
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
@@ -56,6 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: TextFormField(
                     decoration: InputDecoration(
                         labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.white),
                         suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {

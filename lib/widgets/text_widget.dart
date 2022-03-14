@@ -9,7 +9,8 @@ class MyTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text!,
-      style: TextStyle(fontFamily: "Marker", fontSize: size!),
+      style:
+          TextStyle(fontFamily: "Marker", fontSize: size!, color: Colors.white),
     );
   }
 }

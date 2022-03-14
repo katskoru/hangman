@@ -1,23 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hang/newGame/data/models/leaderboard.dart';
 import 'package:hang/newGame/data/providers/auth_state_hang.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-class NewGameBody extends StatefulWidget {
-  NewGameBody({
+class NewGameBody extends StatelessWidget {
+  const NewGameBody({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<NewGameBody> createState() => _NewGameBodyState();
-}
-
-class _NewGameBodyState extends State<NewGameBody> {
   @override
   Widget build(BuildContext context) {
     List _alphabet = Provider.of<NewGameProvider>(context).alphabet;
@@ -29,11 +23,14 @@ class _NewGameBodyState extends State<NewGameBody> {
     List _passedWords = Provider.of<NewGameProvider>(context).passedWords!;
 
     return Provider.of<NewGameProvider>(context).loading!
-        ? const Center(child: CircularProgressIndicator())
+        ? Container(
+            color: Colors.grey[850],
+            child: const Center(child: CircularProgressIndicator()),
+          )
         : Column(
             children: [
               Container(
-                color: Colors.grey[900],
+                color: Colors.grey[850],
                 child: Stack(
                   children: [
                     SvgPicture.asset("assets/svg/hangman.svg"),
@@ -51,7 +48,7 @@ class _NewGameBodyState extends State<NewGameBody> {
               Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 1 / 6,
-                color: Colors.yellow,
+                color: Colors.grey[850],
                 child: Center(
                     child: Wrap(
                   spacing: 10.0,
@@ -69,7 +66,7 @@ class _NewGameBodyState extends State<NewGameBody> {
                               Container(
                                 width: 30.0,
                                 height: 5,
-                                color: Colors.black,
+                                color: Colors.white,
                               )
                             ],
                           ))
@@ -77,30 +74,34 @@ class _NewGameBodyState extends State<NewGameBody> {
                 )),
               ),
               Expanded(
-                  child: Center(
-                child: Wrap(
-                  spacing: 3,
-                  runSpacing: 0,
-                  children: _alphabet
-                      .map((e) => Container(
-                            width: 60.0,
-                            child: ElevatedButton(
-                              // step 1
-                              child: MyTextWidget(
-                                text: e,
-                                size: 30.0,
+                  child: Container(
+                color: Colors.grey[850],
+                child: Center(
+                  child: Wrap(
+                    spacing: 3,
+                    runSpacing: 0,
+                    children: _alphabet
+                        .map((e) => Container(
+                              width: 60.0,
+                              child: ElevatedButton(
+                                // step 1
+                                child: MyTextWidget(
+                                  text: e,
+                                  size: 30.0,
+                                ),
+                                onPressed:
+                                    _passedWords.contains(e.toLowerCase())
+                                        ? null
+                                        : () {
+                                            _checkButton(
+                                                context: context,
+                                                letter: e.toLowerCase(),
+                                                textList: _textList);
+                                          },
                               ),
-                              onPressed: _passedWords.contains(e.toLowerCase())
-                                  ? null
-                                  : () {
-                                      _checkButton(
-                                          context: context,
-                                          letter: e.toLowerCase(),
-                                          textList: _textList);
-                                    },
-                            ),
-                          ))
-                      .toList(),
+                            ))
+                        .toList(),
+                  ),
                 ),
               )),
             ],
@@ -142,6 +143,21 @@ class _NewGameBodyState extends State<NewGameBody> {
           Provider.of<NewGameProvider>(context, listen: false).endTimer();
           Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
               Provider.of<NewGameProvider>(context, listen: false).time);
+          FirebaseFirestore.instance.collection("leaderboard").add({
+            'login': Provider.of<AuthState>(context, listen: false)
+                .auth
+                .currentUser!
+                .email,
+            'score': Provider.of<NewGameProvider>(context, listen: false)
+                .passedTimes!
+                .length,
+            'time': Provider.of<NewGameProvider>(context, listen: false)
+                .passedTimes!
+                .map((e) => e)
+                .fold(0, (int prev, e) {
+              return prev + e;
+            })
+          });
           AwesomeDialog(
             context: context,
             dialogType: DialogType.SUCCES,
@@ -169,6 +185,23 @@ class _NewGameBodyState extends State<NewGameBody> {
         }
       } else if (_myLocalBool == true) {
         Provider.of<NewGameProvider>(context, listen: false).endTimer();
+        Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
+            Provider.of<NewGameProvider>(context, listen: false).time);
+        FirebaseFirestore.instance.collection("leaderboard").add({
+          'login': Provider.of<AuthState>(context, listen: false)
+              .auth
+              .currentUser!
+              .email,
+          'score': Provider.of<NewGameProvider>(context, listen: false)
+              .passedTimes!
+              .length,
+          'time': Provider.of<NewGameProvider>(context, listen: false)
+              .passedTimes!
+              .map((e) => e)
+              .fold(0, (int prev, e) {
+            return prev + e;
+          })
+        });
         AwesomeDialog(
           context: context,
           dialogType: DialogType.SUCCES,
@@ -182,13 +215,7 @@ class _NewGameBodyState extends State<NewGameBody> {
           btnCancelText: "Close",
           btnOkText: "Start again",
           btnCancelOnPress: () {
-            FirebaseFirestore.instance.collection("leaderboard").add({
-              'login':
-                  Provider.of<AuthState>(context, listen: false).userChanges,
-              'score': Provider.of<NewGameProvider>(context, listen: false)
-                  .currentWord,
-              'time': 9
-            }).whenComplete(() => Navigator.of(context).pop());
+            Navigator.pop(context);
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
@@ -203,8 +230,7 @@ class _NewGameBodyState extends State<NewGameBody> {
           Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
       if (Provider.of<NewGameProvider>(context, listen: false).mistakes! >= 6) {
         Provider.of<NewGameProvider>(context, listen: false).endTimer();
-        Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
-            Provider.of<NewGameProvider>(context, listen: false).time);
+
         AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
@@ -217,20 +243,7 @@ class _NewGameBodyState extends State<NewGameBody> {
           btnCancelText: "Restart",
           desc: 'Do you want play again?',
           btnCancelOnPress: () {
-            FirebaseFirestore.instance.collection("leaderboard").add({
-              'login': Provider.of<AuthState>(context, listen: false)
-                  .auth
-                  .currentUser!
-                  .email,
-              'score': Provider.of<NewGameProvider>(context, listen: false)
-                  .currentWord,
-              'time': Provider.of<NewGameProvider>(context, listen: false)
-                  .passedTimes!
-                  .map((e) => e)
-                  .fold(0, (int prev, e) {
-                return prev + e;
-              })
-            }).whenComplete(() => Navigator.of(context).pop());
+            Navigator.pop(context);
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
