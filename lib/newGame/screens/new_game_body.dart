@@ -1,13 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hang/newGame/data/models/leaderboard.dart';
+import 'package:hang/newGame/data/providers/auth_state_hang.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-class NewGameBody extends StatelessWidget {
-  NewGameBody({Key? key}) : super(key: key);
+class NewGameBody extends StatefulWidget {
+  NewGameBody({Key? key, this.lead}) : super(key: key);
+  final Leaderboard? lead;
+
+  @override
+  State<NewGameBody> createState() => _NewGameBodyState();
+}
+
+class _NewGameBodyState extends State<NewGameBody> {
+  Leaderboard? _lead;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +180,13 @@ class NewGameBody extends StatelessWidget {
           btnCancelText: "Close",
           btnOkText: "Start again",
           btnCancelOnPress: () {
-            Navigator.pop(context);
+            FirebaseFirestore.instance.collection("leaderboard").add({
+              'login':
+                  Provider.of<AuthState>(context, listen: false).userChanges,
+              'score': Provider.of<NewGameProvider>(context, listen: false)
+                  .currentWord,
+              'time': Provider.of<NewGameProvider>(context, listen: false).timer
+            }).whenComplete(() => Navigator.of(context).pop());
             // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
@@ -200,7 +216,15 @@ class NewGameBody extends StatelessWidget {
           btnCancelText: "Restart",
           desc: 'Do you want play again?',
           btnCancelOnPress: () {
-            Navigator.pop(context);
+            FirebaseFirestore.instance.collection("leaderboard").add({
+              'login': Provider.of<AuthState>(context, listen: false)
+                  .auth
+                  .currentUser!
+                  .email,
+              'score': Provider.of<NewGameProvider>(context, listen: false)
+                  .currentWord,
+              'time': Provider.of<NewGameProvider>(context, listen: false).time,
+            }).whenComplete(() => Navigator.of(context).pop());
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
