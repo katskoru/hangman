@@ -9,16 +9,15 @@ import 'package:provider/provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class NewGameBody extends StatefulWidget {
-  NewGameBody({Key? key, this.lead}) : super(key: key);
-  final Leaderboard? lead;
+  NewGameBody({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<NewGameBody> createState() => _NewGameBodyState();
 }
 
 class _NewGameBodyState extends State<NewGameBody> {
-  Leaderboard? _lead;
-
   @override
   Widget build(BuildContext context) {
     List _alphabet = Provider.of<NewGameProvider>(context).alphabet;
@@ -141,6 +140,8 @@ class _NewGameBodyState extends State<NewGameBody> {
               1) {
         if (_myLocalBool) {
           Provider.of<NewGameProvider>(context, listen: false).endTimer();
+          Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
+              Provider.of<NewGameProvider>(context, listen: false).time);
           AwesomeDialog(
             context: context,
             dialogType: DialogType.SUCCES,
@@ -161,6 +162,7 @@ class _NewGameBodyState extends State<NewGameBody> {
                       1;
               Provider.of<NewGameProvider>(context, listen: false).passedWords =
                   [];
+
               Provider.of<NewGameProvider>(context, listen: false).startTimer();
             },
           ).show();
@@ -185,17 +187,14 @@ class _NewGameBodyState extends State<NewGameBody> {
                   Provider.of<AuthState>(context, listen: false).userChanges,
               'score': Provider.of<NewGameProvider>(context, listen: false)
                   .currentWord,
-              'time': Provider.of<NewGameProvider>(context, listen: false).timer
+              'time': 9
             }).whenComplete(() => Navigator.of(context).pop());
-            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
           btnOkOnPress: () {
             Provider.of<NewGameProvider>(context, listen: false).loading = true;
             Provider.of<NewGameProvider>(context, listen: false).init();
-            // Provider.of<TimerProvider>(context, listen: false).timer!.cancel();
           },
         ).show();
-        // show end game dialog -> close i start again (new game plus)
       }
 
       ////////////////
@@ -204,6 +203,8 @@ class _NewGameBodyState extends State<NewGameBody> {
           Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
       if (Provider.of<NewGameProvider>(context, listen: false).mistakes! >= 6) {
         Provider.of<NewGameProvider>(context, listen: false).endTimer();
+        Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
+            Provider.of<NewGameProvider>(context, listen: false).time);
         AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
@@ -223,7 +224,12 @@ class _NewGameBodyState extends State<NewGameBody> {
                   .email,
               'score': Provider.of<NewGameProvider>(context, listen: false)
                   .currentWord,
-              'time': Provider.of<NewGameProvider>(context, listen: false).time,
+              'time': Provider.of<NewGameProvider>(context, listen: false)
+                  .passedTimes!
+                  .map((e) => e)
+                  .fold(0, (int prev, e) {
+                return prev + e;
+              })
             }).whenComplete(() => Navigator.of(context).pop());
           },
           btnOkOnPress: () {

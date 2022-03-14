@@ -27,6 +27,18 @@ class NewGameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<int>? _passedTimes;
+  List<int>? get passedTimes => _passedTimes;
+  set passedTimes(List<int>? newPass) {
+    _passedTimes = newPass;
+    notifyListeners();
+  }
+
+  addPassedTimes(int passtime) {
+    _passedTimes!.add(passtime);
+    notifyListeners();
+  }
+
   addPassedLetter(String letter) {
     _passedWords!.add(letter);
     notifyListeners();
@@ -56,6 +68,7 @@ class NewGameProvider extends ChangeNotifier {
     _mistakes = 0;
     _passedWords = [];
     _currentWord = 0;
+    _passedTimes = [];
     _loading = true;
     _moveToNextLevel = false;
     _fetchData();
