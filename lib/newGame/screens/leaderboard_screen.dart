@@ -25,13 +25,13 @@ class LeaderboardScreen extends StatelessWidget {
           ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: const [
                 SizedBox(
                   width: 15,
                 ),
-                Text("Login"),
-                Text("Score"),
-                Text("Time"),
+                Text("Login", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Score", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Time", style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ),
