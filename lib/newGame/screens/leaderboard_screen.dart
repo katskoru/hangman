@@ -24,19 +24,25 @@ class LeaderboardScreen extends StatelessWidget {
         children: [
           Container(
             height: 40,
-            color: Colors.grey[850],
+            color: Colors.black,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
                 SizedBox(
-                  width: 15,
+                  width: 45,
                 ),
-                Text(
-                  "Login",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                MyTextWidget(
+                  text: "Login",
+                  size: 20,
                 ),
-                Text("Score", style: TextStyle(fontWeight: FontWeight.bold)),
-                Text("Time", style: TextStyle(fontWeight: FontWeight.bold)),
+                MyTextWidget(
+                  text: "Score",
+                  size: 20,
+                ),
+                MyTextWidget(
+                  text: "Time",
+                  size: 20,
+                ),
               ],
             ),
           ),
