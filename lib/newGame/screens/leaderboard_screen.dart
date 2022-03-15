@@ -22,20 +22,25 @@ class LeaderboardScreen extends StatelessWidget {
           )),
       body: Column(
         children: [
-          ListTile(
-            title: Row(
+          Container(
+            height: 40,
+            color: Colors.grey[850],
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: const [
                 SizedBox(
                   width: 15,
                 ),
-                Text("Login", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(
+                  "Login",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
                 Text("Score", style: TextStyle(fontWeight: FontWeight.bold)),
                 Text("Time", style: TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
           ),
-          Center(
+          Expanded(
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("leaderboard")
@@ -61,7 +66,7 @@ class LeaderboardScreen extends StatelessWidget {
                           return Container(
                             width: double.infinity,
                             color: (index % 2 == 0)
-                                ? Colors.red
+                                ? Colors.white
                                 : Colors.grey[850],
                             child: ListTile(
                                 leading: Text((index + 1).toString()),
