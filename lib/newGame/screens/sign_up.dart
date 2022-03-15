@@ -21,7 +21,11 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[850],
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Hangman",
+            style: TextStyle(fontFamily: "Marker", fontSize: 30)),
+      ),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -30,15 +34,19 @@ class _SignUpPageState extends State<SignUpPage> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                const FlutterLogo(
-                  size: 100.0,
+                const Icon(
+                  Icons.account_circle_outlined,
+                  color: Colors.white,
+                  size: 100,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    style: TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                         labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.white)),
+                        labelStyle:
+                            TextStyle(color: Colors.white, fontSize: 20)),
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
@@ -59,18 +67,23 @@ class _SignUpPageState extends State<SignUpPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.white),
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                            icon: Icon(showPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility))),
+                      labelText: "Password",
+                      labelStyle:
+                          const TextStyle(color: Colors.white, fontSize: 20),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        },
+                        icon: Icon(showPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        color: Colors.white,
+                      ),
+                    ),
                     controller: _passwordController,
                     obscureText: !showPassword,
                     keyboardType: TextInputType.visiblePassword,
@@ -86,6 +99,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Center(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(60, 40),
+                    ),
                     onPressed: _signUp
                         ? () {
                             if (_formKey.currentState!.validate()) {
@@ -105,11 +121,15 @@ class _SignUpPageState extends State<SignUpPage> {
                               );
                             }
                           },
-                    child: Text(_signUp ? "Sign Up" : "Log In"),
+                    child: Text(
+                      _signUp ? "Sign Up" : "Log In",
+                    ),
                   ),
                 ),
                 Center(
                   child: TextButton(
+                    style:
+                        TextButton.styleFrom(minimumSize: const Size(60, 40)),
                     onPressed: () {
                       setState(() {
                         _signUp = !_signUp;

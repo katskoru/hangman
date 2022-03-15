@@ -31,16 +31,20 @@ class NewGameBody extends StatelessWidget {
             children: [
               Container(
                 color: Colors.grey[850],
-                child: Stack(
-                  children: [
-                    SvgPicture.asset("assets/svg/hangman.svg"),
-                    if (_mistakes > 0) SvgPicture.asset("assets/svg/head.svg"),
-                    if (_mistakes > 1) SvgPicture.asset("assets/svg/c.svg"),
-                    if (_mistakes > 2) SvgPicture.asset("assets/svg/lA.svg"),
-                    if (_mistakes > 3) SvgPicture.asset("assets/svg/lL.svg"),
-                    if (_mistakes > 4) SvgPicture.asset("assets/svg/rA.svg"),
-                    if (_mistakes > 5) SvgPicture.asset("assets/svg/rL.svg"),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    children: [
+                      SvgPicture.asset("assets/svg/hangman.svg"),
+                      if (_mistakes > 0)
+                        SvgPicture.asset("assets/svg/head.svg"),
+                      if (_mistakes > 1) SvgPicture.asset("assets/svg/c.svg"),
+                      if (_mistakes > 2) SvgPicture.asset("assets/svg/lA.svg"),
+                      if (_mistakes > 3) SvgPicture.asset("assets/svg/lL.svg"),
+                      if (_mistakes > 4) SvgPicture.asset("assets/svg/rA.svg"),
+                      if (_mistakes > 5) SvgPicture.asset("assets/svg/rL.svg"),
+                    ],
+                  ),
                 ),
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 1 / 3,
