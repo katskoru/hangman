@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hang/newGame/data/models/leaderboard.dart';
 import 'package:hang/newGame/data/providers/new_game_provider.dart';
 import 'package:hang/newGame/screens/new_game_screen.dart';
 import 'package:hang/newGame/screens/leaderboard_screen.dart';

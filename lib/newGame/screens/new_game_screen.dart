@@ -53,7 +53,7 @@ class NewGame extends StatelessWidget {
               return false;
             }
           },
-          child: NewGameBody()),
+          child: const NewGameBody()),
     );
   }
 }
