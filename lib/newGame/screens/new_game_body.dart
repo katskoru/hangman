@@ -40,8 +40,8 @@ class NewGameBody extends StatelessWidget {
                         SvgPicture.asset("assets/svg/head.svg"),
                       if (_mistakes > 1) SvgPicture.asset("assets/svg/c.svg"),
                       if (_mistakes > 2) SvgPicture.asset("assets/svg/lA.svg"),
-                      if (_mistakes > 3) SvgPicture.asset("assets/svg/lL.svg"),
-                      if (_mistakes > 4) SvgPicture.asset("assets/svg/rA.svg"),
+                      if (_mistakes > 3) SvgPicture.asset("assets/svg/rA.svg"),
+                      if (_mistakes > 4) SvgPicture.asset("assets/svg/lL.svg"),
                       if (_mistakes > 5) SvgPicture.asset("assets/svg/rL.svg"),
                     ],
                   ),
@@ -184,6 +184,7 @@ class NewGameBody extends StatelessWidget {
                   [];
 
               Provider.of<NewGameProvider>(context, listen: false).startTimer();
+              Provider.of<NewGameProvider>(context, listen: false).mistakes = 0;
             },
           ).show();
         }
