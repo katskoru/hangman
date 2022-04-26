@@ -5,6 +5,9 @@ Contains CRUD, Provider State Management, Firebase and more.
 
 # Getting Started
 
+1. Sign Up with your created email and password (any email and any password).
+2. Then you could play, look at leaderboard or log out.
+3. Good luck :) .
 This is a normal flutter app. You should follow the instructions in the [official documentation](https://flutter.dev/docs).
 
 # What's included
