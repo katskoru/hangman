@@ -14,15 +14,15 @@ class NewGameBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List _alphabet = Provider.of<NewGameProvider>(context).alphabet;
-    List listOfWords =
-        Provider.of<NewGameProvider>(context).randomWords!.randomWords!;
-    int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
+    NewGameProvider gameProvider = Provider.of<NewGameProvider>(context);
+    List _alphabet = gameProvider.alphabet;
+    List listOfWords = gameProvider.randomWords!.randomWords!;
+    int? _currentWord = gameProvider.currentWord;
     List _textList = listOfWords[_currentWord!].toLowerCase().split('');
-    int _mistakes = Provider.of<NewGameProvider>(context).mistakes!;
-    List _passedWords = Provider.of<NewGameProvider>(context).passedWords!;
+    int _mistakes = gameProvider.mistakes!;
+    List _passedWords = gameProvider.passedWords!;
 
-    return Provider.of<NewGameProvider>(context).loading!
+    return gameProvider.loading!
         ? Container(
             color: Colors.grey[850],
             child: const Center(child: CircularProgressIndicator()),
@@ -113,9 +113,10 @@ class NewGameBody extends StatelessWidget {
   }
 
   _checkButton({String? letter, List? textList, context}) {
+    NewGameProvider _gameProvider =
+        Provider.of<NewGameProvider>(context, listen: false);
     if (textList!.contains(letter)) {
-      Provider.of<NewGameProvider>(context, listen: false)
-          .addPassedLetter(letter!);
+      _gameProvider.addPassedLetter(letter!);
 
 ////////////////// is next level check
 
@@ -123,9 +124,7 @@ class NewGameBody extends StatelessWidget {
       List<bool> _wordCheck = [];
 
       textList.forEach((element) {
-        if (Provider.of<NewGameProvider>(context, listen: false)
-            .passedWords!
-            .contains(element)) {
+        if (_gameProvider.passedWords!.contains(element)) {
           _wordCheck.add(true);
         } else {
           _wordCheck.add(false);
@@ -137,28 +136,19 @@ class NewGameBody extends StatelessWidget {
       } else {
         _myLocalBool = true;
       }
-      if (Provider.of<NewGameProvider>(context, listen: false).currentWord! <
-          Provider.of<NewGameProvider>(context, listen: false)
-                  .randomWords!
-                  .randomWords!
-                  .length -
-              1) {
+      if (_gameProvider.currentWord! <
+          _gameProvider.randomWords!.randomWords!.length - 1) {
         if (_myLocalBool) {
-          Provider.of<NewGameProvider>(context, listen: false).endTimer();
-          Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
-              Provider.of<NewGameProvider>(context, listen: false).time);
+          _gameProvider.endTimer();
+          _gameProvider.addPassedTimes(_gameProvider.time);
           FirebaseFirestore.instance.collection("leaderboard").add({
             'login': Provider.of<AuthState>(context, listen: false)
                 .auth
                 .currentUser!
                 .email,
-            'score': Provider.of<NewGameProvider>(context, listen: false)
-                .passedTimes!
-                .length,
-            'time': Provider.of<NewGameProvider>(context, listen: false)
-                .passedTimes!
-                .map((e) => e)
-                .fold(0, (int prev, e) {
+            'score': _gameProvider.passedTimes!.length,
+            'time':
+                _gameProvider.passedTimes!.map((e) => e).fold(0, (int prev, e) {
               return prev + e;
             })
           });
@@ -176,34 +166,25 @@ class NewGameBody extends StatelessWidget {
               Navigator.pop(context);
             },
             btnOkOnPress: () {
-              Provider.of<NewGameProvider>(context, listen: false).currentWord =
-                  Provider.of<NewGameProvider>(context, listen: false)
-                          .currentWord! +
-                      1;
-              Provider.of<NewGameProvider>(context, listen: false).passedWords =
-                  [];
+              _gameProvider.currentWord = _gameProvider.currentWord! + 1;
+              _gameProvider.passedWords = [];
 
-              Provider.of<NewGameProvider>(context, listen: false).startTimer();
-              Provider.of<NewGameProvider>(context, listen: false).mistakes = 0;
+              _gameProvider.startTimer();
+              _gameProvider.mistakes = 0;
             },
           ).show();
         }
       } else if (_myLocalBool == true) {
-        Provider.of<NewGameProvider>(context, listen: false).endTimer();
-        Provider.of<NewGameProvider>(context, listen: false).addPassedTimes(
-            Provider.of<NewGameProvider>(context, listen: false).time);
+        _gameProvider.endTimer();
+        _gameProvider.addPassedTimes(_gameProvider.time);
         FirebaseFirestore.instance.collection("leaderboard").add({
           'login': Provider.of<AuthState>(context, listen: false)
               .auth
               .currentUser!
               .email,
-          'score': Provider.of<NewGameProvider>(context, listen: false)
-              .passedTimes!
-              .length,
-          'time': Provider.of<NewGameProvider>(context, listen: false)
-              .passedTimes!
-              .map((e) => e)
-              .fold(0, (int prev, e) {
+          'score': _gameProvider.passedTimes!.length,
+          'time':
+              _gameProvider.passedTimes!.map((e) => e).fold(0, (int prev, e) {
             return prev + e;
           })
         });
@@ -223,16 +204,15 @@ class NewGameBody extends StatelessWidget {
             Navigator.pop(context);
           },
           btnOkOnPress: () {
-            Provider.of<NewGameProvider>(context, listen: false).loading = true;
-            Provider.of<NewGameProvider>(context, listen: false).init();
+            _gameProvider.loading = true;
+            _gameProvider.init();
           },
         ).show();
       }
     } else {
-      Provider.of<NewGameProvider>(context, listen: false).mistakes =
-          Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
-      if (Provider.of<NewGameProvider>(context, listen: false).mistakes! >= 6) {
-        Provider.of<NewGameProvider>(context, listen: false).endTimer();
+      _gameProvider.mistakes = _gameProvider.mistakes! + 1;
+      if (_gameProvider.mistakes! >= 6) {
+        _gameProvider.endTimer();
         AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,
@@ -248,8 +228,8 @@ class NewGameBody extends StatelessWidget {
             Navigator.pop(context);
           },
           btnOkOnPress: () {
-            Provider.of<NewGameProvider>(context, listen: false).loading = true;
-            Provider.of<NewGameProvider>(context, listen: false).init();
+            _gameProvider.loading = true;
+            _gameProvider.init();
           },
         ).show();
       }

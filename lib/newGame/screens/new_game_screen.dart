@@ -10,6 +10,8 @@ class NewGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewGameProvider _gameProvider =
+        Provider.of<NewGameProvider>(context, listen: false);
     int? _currentWord = Provider.of<NewGameProvider>(context).currentWord;
 
     return Scaffold(
@@ -20,11 +22,8 @@ class NewGame extends StatelessWidget {
                         null
                     ? null
                     : () {
-                        if (Provider.of<NewGameProvider>(context, listen: false)
-                                .timer !=
-                            null) {
-                          Provider.of<NewGameProvider>(context, listen: false)
-                              .endTimer();
+                        if (_gameProvider.timer != null) {
+                          _gameProvider.endTimer();
                           Navigator.pop(context);
                         }
                       },
@@ -45,9 +44,8 @@ class NewGame extends StatelessWidget {
       ),
       body: WillPopScope(
           onWillPop: () async {
-            if (Provider.of<NewGameProvider>(context, listen: false).timer !=
-                null) {
-              Provider.of<NewGameProvider>(context, listen: false).endTimer();
+            if (_gameProvider.timer != null) {
+              _gameProvider.endTimer();
               return true;
             } else {
               return false;
