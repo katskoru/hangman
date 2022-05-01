@@ -47,6 +47,6 @@ class LoginHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _firebaseUser = context.watch<User?>();
-    return _firebaseUser == null ? SignUpPage() : Home();
+    return _firebaseUser == null ? SignUpPage() : const Home();
   }
 }
