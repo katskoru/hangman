@@ -16,7 +16,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _signUp = false;
   bool showPassword = false;
-  String _emailCheck = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
