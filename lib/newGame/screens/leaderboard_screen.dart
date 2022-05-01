@@ -4,7 +4,7 @@ import 'package:hang/newGame/data/models/leaderboard.dart';
 import 'package:hang/widgets/text_widget.dart';
 
 class LeaderboardScreen extends StatelessWidget {
-  LeaderboardScreen({Key? key}) : super(key: key);
+  const LeaderboardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class LeaderboardScreen extends StatelessWidget {
                             width: double.infinity,
                             color: (index % 2 == 0)
                                 ? Colors.white
-                                : Colors.grey[850],
+                                : Colors.grey[800],
                             child: ListTile(
                                 leading: Text((index + 1).toString()),
                                 title: Row(

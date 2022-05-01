@@ -57,14 +57,15 @@ class NewGameBody extends StatelessWidget {
                     child: Wrap(
                   spacing: 10.0,
                   children: _textList
-                      .map((e) => Column(
+                      .map((letter) => Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               MyTextWidget(
-                                text: _passedWords.contains(e.toLowerCase())
-                                    ? e
-                                    : "",
+                                text:
+                                    _passedWords.contains(letter.toLowerCase())
+                                        ? letter
+                                        : "",
                                 size: 20.0,
                               ),
                               Container(
@@ -88,7 +89,6 @@ class NewGameBody extends StatelessWidget {
                         .map((e) => Container(
                               width: 60.0,
                               child: ElevatedButton(
-                                // step 1
                                 child: MyTextWidget(
                                   text: e,
                                   size: 30.0,
@@ -228,14 +228,11 @@ class NewGameBody extends StatelessWidget {
           },
         ).show();
       }
-
-      ////////////////
     } else {
       Provider.of<NewGameProvider>(context, listen: false).mistakes =
           Provider.of<NewGameProvider>(context, listen: false).mistakes! + 1;
       if (Provider.of<NewGameProvider>(context, listen: false).mistakes! >= 6) {
         Provider.of<NewGameProvider>(context, listen: false).endTimer();
-
         AwesomeDialog(
           context: context,
           dialogType: DialogType.ERROR,

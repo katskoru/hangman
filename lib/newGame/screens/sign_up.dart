@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../data/providers/auth_state_hang.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
