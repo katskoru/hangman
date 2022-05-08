@@ -1,7 +1,7 @@
 # Hangman Game App
 
-A simple game in which we log in via auth-firebase, collect data and download from the firebstore and download words from the API.
-Contains CRUD, Provider State Management, Firebase and more.
+A simple game in which we log in via auth-firebase, collect data (results of games) and download from the firebstore database and download words from the API.
+Contains Provider State Management, Firebase authentication, Firebase database usage and more.
 
 # Getting Started
 
@@ -11,6 +11,6 @@ Contains CRUD, Provider State Management, Firebase and more.
 This is a normal flutter app. You should follow the instructions in the [official documentation](https://flutter.dev/docs).
 
 # What's included
-- CRUD: create, update and remove results with Firebase
+- Firebase database with results of games
 - Firebase authentication via email
 - words fetching from API: https://random-word-api.herokuapp.com/home
