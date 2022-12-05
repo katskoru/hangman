@@ -22,10 +22,8 @@ class NewGame extends StatelessWidget {
                         null
                     ? null
                     : () {
-                        if (_gameProvider.timer != null) {
-                          _gameProvider.endTimer();
-                          Navigator.pop(context);
-                        }
+                        _gameProvider.endTimer();
+                        Navigator.pop(context);
                       },
             icon: const Icon(Icons.reply_outlined)),
         centerTitle: true,

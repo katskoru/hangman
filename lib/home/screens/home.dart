@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 200,
               child: Image.asset(
                 "assets/img/pexels-neosiam-625219.jpg",
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LeaderboardScreen()));
+                          builder: (context) => const LeaderboardScreen()));
                 },
                 child: const Text("Leaderboard"),
               ),

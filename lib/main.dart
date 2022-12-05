@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.red,
         ),
-        home: LoginHandler(),
+        home: const LoginHandler(),
       ),
     );
   }
@@ -47,6 +47,6 @@ class LoginHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _firebaseUser = context.watch<User?>();
-    return _firebaseUser == null ? SignUpPage() : const Home();
+    return _firebaseUser == null ? const SignUpPage() : const Home();
   }
 }

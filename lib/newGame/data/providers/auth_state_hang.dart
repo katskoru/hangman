@@ -10,8 +10,7 @@ class AuthState extends ChangeNotifier {
 
   Future signInWithEmail({String? email, String? password}) async {
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email!, password: password!);
+      await auth.signInWithEmailAndPassword(email: email!, password: password!);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
         print('Invalid email.');
@@ -25,7 +24,7 @@ class AuthState extends ChangeNotifier {
 
   Future signOnWithEmail({String? email, String? password}) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
           email: email!, password: password!);
       signInWithEmail(email: email, password: password);
     } on FirebaseAuthException catch (e) {
